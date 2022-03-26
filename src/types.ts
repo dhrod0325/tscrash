@@ -21,6 +21,11 @@ export type Country = {
   Cases: string;
 };
 
+export type CountryTotalCounterProp =
+  | 'TotalDeaths'
+  | 'TotalConfirmed'
+  | 'TotalRecovered';
+
 export type Global = {
   NewConfirmed: number;
   TotalConfirmed: number;
@@ -30,3 +35,9 @@ export type Global = {
   TotalRecovered: number;
   Date: Date;
 };
+
+export const totalDataTypes = [
+  'TotalDeaths',
+  'TotalConfirmed',
+  'TotalRecovered',
+];

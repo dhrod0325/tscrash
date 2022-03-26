@@ -4,10 +4,10 @@ const API_BASE_URL = 'https://api.covid19api.com';
 const API_SUMMARY_URL = `${API_BASE_URL}/summary`;
 const API_COUNTRY_URL = `${API_BASE_URL}/country`;
 
-export const api = () => {
+const Api = () => {
   // api
   async function fetchCovidSummary(): Promise<Summary> {
-    const response = await fetch(API_SUMMARY_URL);
+    const response = await fetch(API_SUMMARY_URL, {});
     return await response.json();
   }
 
@@ -29,3 +29,5 @@ export const api = () => {
     fetchCovidSummary,
   };
 };
+
+export const api = Api();
