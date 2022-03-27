@@ -6,6 +6,8 @@ import { api } from '../../lib/api';
 import { useSpinner } from '../Helper/Spinner';
 
 export class RecoveredTotalList implements Component {
+  private readonly SPINNER_ID = 'recovered-spinner';
+
   private readonly $total: RecoveredTotal;
   private readonly $list: RecoveredList;
 
@@ -18,11 +20,11 @@ export class RecoveredTotalList implements Component {
     this.$total.loadData(data);
   }
 
-  public async loadData(selectedId: string | undefined) {
+  public async loadData(selectedId: string) {
     this.$list.clear();
 
-    await useSpinner(this.$list.$container, 'recovered-spinner', async () => {
-      const data = await api.fetchCountryInfo(selectedId, 'recovered');
+    await useSpinner(this.$list.$container, this.SPINNER_ID, async () => {
+      const data = await api.getRecovered(selectedId);
 
       this.$list.setItems(data);
       this.$total.setHtmlByFirstCountry(data);

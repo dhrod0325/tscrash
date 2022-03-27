@@ -10,29 +10,30 @@ export class ChartBox implements Component {
     //throw new Error('Method not implemented.');
   }
 
-  async loadData(selectedId: string | undefined) {
-    const data = await api.fetchCountryInfo(selectedId, 'confirmed');
+  async loadData(selectedId: string) {
+    const data = await api.getConfirmed(selectedId);
 
     if (data) {
-      this.renderChart(this.getData(data), this.getLabel(data));
+      this.render(this.createData(data), this.createLabel(data));
     }
   }
 
-  private getData(data: Country[]): string[] {
+  private createData(data: Country[]): string[] {
     return data.slice(-14).map(value => value.Cases);
   }
 
-  private getLabel(data: Country[]) {
+  private createLabel(data: Country[]) {
     return data.slice(-14).map(value => getDateString(value.Date).slice(5, -1));
   }
 
-  private renderChart(data: string[], labels: string[]) {
+  private render(data: string[], labels: string[]): void {
     const ctx = (<HTMLCanvasElement>$('#lineChart')).getContext('2d');
 
     // @ts-ignore
     Chart.defaults.global.defaultFontColor = '#f5eaea';
     // @ts-ignore
     Chart.defaults.global.defaultFontFamily = 'Exo 2';
+
     // @ts-ignore
     new Chart(ctx, {
       type: 'line',

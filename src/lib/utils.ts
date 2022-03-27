@@ -1,25 +1,25 @@
-import { Country, CountryTotalCounterProp, Summary } from '../types';
+import { Country, TotalCounterProp, Summary } from '../types';
 
 export function $(selector: string): HTMLElement {
   return <HTMLElement>document.querySelector(selector);
 }
 
-export function getDateTime(date: number | string | Date) {
+export function getDateTime(date: number | string | Date): number {
   return new Date(date).getTime();
 }
 
-export function getDateString(date: Date) {
+export function getDateString(date: Date): string {
   return new Date(date).toLocaleString();
 }
 
-export function timeDiff(a: Date, b: Date) {
+export function timeDiff(a: Date, b: Date): number {
   return getDateTime(b) - getDateTime(a);
 }
 
 export function calcTotalCountData(
   data: Summary,
-  prop: CountryTotalCounterProp,
-) {
+  prop: TotalCounterProp,
+): number {
   return data.Countries.reduce((total, current) => total + current[prop], 0);
 }
 
@@ -41,5 +41,7 @@ export function findClickedId(event: Event): string | undefined {
 }
 
 export function sortedData(data: Country[]): Country[] {
-  return data.sort((a, b) => timeDiff(a.Date, b.Date));
+  const result = data.sort((a, b) => timeDiff(a.Date, b.Date));
+
+  return [...result];
 }

@@ -3,10 +3,12 @@ import { Summary } from '../../types';
 import { $, getDateString } from '../../lib/utils';
 
 export class LastUpdateTime implements Component {
+  private readonly SELECTOR_ID = '.last-updated-time';
+
   private readonly $container: HTMLElement;
 
   constructor() {
-    this.$container = $('.last-updated-time');
+    this.$container = $(this.SELECTOR_ID);
   }
 
   public setup(data: Summary): void {
@@ -17,7 +19,7 @@ export class LastUpdateTime implements Component {
     this.$container.innerText = html;
   }
 
-  private update(data: Summary) {
+  private update(data: Summary): void {
     this.setHtml(getDateString(data.Date));
   }
 }
