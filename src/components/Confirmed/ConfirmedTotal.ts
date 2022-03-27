@@ -1,6 +1,6 @@
-import { $, calcTotalCountData } from '../lib/utils';
-import { Component } from '../interfaces';
-import { Summary } from '../types';
+import { Component } from '../../interfaces';
+import { Summary } from '../../types';
+import { $, calcTotalCountData } from '../../lib/utils';
 
 export class ConfirmedTotal implements Component {
   private readonly $container: HTMLElement;
@@ -11,10 +11,10 @@ export class ConfirmedTotal implements Component {
 
   setup(data: Summary): void {
     const count = calcTotalCountData(data, 'TotalConfirmed');
-    this.setTotal(String(count));
+    this.setHtml(String(count));
   }
 
-  private setTotal(count: string) {
+  private setHtml(count: string) {
     this.$container.innerText = count;
   }
 }

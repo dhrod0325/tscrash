@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Country, Summary } from '../types';
-import { $, getDateString } from '../lib/utils';
-import { api } from '../lib/api';
-import { Component } from '../interfaces';
+
+import { Component } from '../../interfaces';
+import { Country, Summary } from '../../types';
+import { api } from '../../lib/api';
+import { $, getDateString } from '../../lib/utils';
 
 export class ChartBox implements Component {
   setup(data: Summary): void {

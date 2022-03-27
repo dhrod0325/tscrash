@@ -1,6 +1,6 @@
-import { $, sortByTimeStamp } from '../lib/utils';
-import { Country } from '../types';
-import { createRecoveredListItem } from '../lib/template';
+import { Country } from '../../types';
+import { $, sortedData } from '../../lib/utils';
+import { createRecoveredListItem } from '../../lib/template';
 
 export class RecoveredList {
   readonly $container: HTMLElement;
@@ -12,7 +12,8 @@ export class RecoveredList {
   setItems(data?: Country[]) {
     if (!data) return;
 
-    const sorted = data.sort((a, b) => sortByTimeStamp(b.Date, a.Date));
+    const sorted = sortedData(data);
+
     sorted.forEach(value => {
       this.$container.appendChild(createRecoveredListItem(value));
     });

@@ -1,6 +1,6 @@
-import { $, sortByTimeStamp } from '../lib/utils';
-import { Country } from '../types';
-import { createDeathTotalListItem } from '../lib/template';
+import { $, sortedData } from '../../lib/utils';
+import { Country } from '../../types';
+import { createDeathTotalListItem } from '../../lib/template';
 
 export class DeathList {
   readonly $container: HTMLElement;
@@ -16,7 +16,7 @@ export class DeathList {
   private setItems(data?: Country[]) {
     if (!data) return;
 
-    const sorted = data.sort((a, b) => sortByTimeStamp(a.Date, b.Date));
+    const sorted = sortedData(data);
 
     sorted.forEach(country => {
       this.$container.appendChild(createDeathTotalListItem(country));
