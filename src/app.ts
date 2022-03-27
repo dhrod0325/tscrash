@@ -8,12 +8,18 @@ import { DeathTotalList } from './components/DeathTotalList';
 import { LastUpdateTime } from './components/LastUpdateTime';
 import { Component } from './interfaces';
 import { findClickedId } from './lib/utils';
+import { EventEmitter } from './lib/EventEmitter';
 
-const rankList = new RankList(handleListClick);
+const eventEmitter = new EventEmitter();
+
 const confirmedTotal = new ConfirmedTotal();
-const chart = new ChartBox();
+
+const rankList = new RankList(eventEmitter);
 const recoveredList = new RecoveredList();
 const deathTotalList = new DeathTotalList();
+
+const chart = new ChartBox();
+
 const lastUpdateTime = new LastUpdateTime();
 
 const components: Component[] = [
@@ -22,35 +28,36 @@ const components: Component[] = [
   recoveredList,
   deathTotalList,
   lastUpdateTime,
+  chart,
 ];
 
 function startApp() {
-  setupData();
+  setup();
 
-  initEvents();
+  events();
+}
+
+async function setup() {
+  const data = await api.fetchCovidSummary();
+
+  components.forEach(component => component.setup(data));
 }
 
 // events
-function initEvents() {
-  document.addEventListener('rankListClicked', handleListClick);
+function events() {
+  eventEmitter.on('rankItemClicked', handleListClick);
 }
 
 async function handleListClick(event: Event) {
-  const selectedId = findClickedId(event);
+  const selectedId = findClickedId((<CustomEvent>event).detail);
 
   if (selectedId === 'united-states') {
     return alert('데이터가 많아 총괄 현황은 제공하지 않아요😭');
   }
 
-  recoveredList.loadData(selectedId);
-  deathTotalList.loadData(selectedId);
-  chart.loadData(selectedId);
-}
-
-async function setupData() {
-  const data = await api.fetchCovidSummary();
-
-  components.forEach(component => component.setup(data));
+  components.forEach(
+    component => component.loadData && component.loadData(selectedId),
+  );
 }
 
 startApp();

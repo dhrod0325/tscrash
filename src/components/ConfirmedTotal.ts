@@ -12,10 +12,10 @@ export class ConfirmedTotal implements Component {
   setup(data: Summary): void {
     const count = calcTotalCountData(data, 'TotalConfirmed');
 
-    this.setTotalConfirmedNumber(String(count));
+    this.setCountNumber(String(count));
   }
 
-  setTotalConfirmedNumber(count: string) {
+  private setCountNumber(count: string) {
     this.$confirmedTotal.innerText = count;
   }
 }

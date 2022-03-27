@@ -9,11 +9,15 @@ export class LastUpdateTime implements Component {
     this.$lastUpdatedTime = $('.last-updated-time');
   }
 
-  setup(data: Summary): void {
+  public setup(data: Summary): void {
     this.setLastUpdatedTimestamp(data);
   }
 
-  setLastUpdatedTimestamp(data: Summary) {
-    this.$lastUpdatedTime.innerText = new Date(data.Date).toLocaleString();
+  private setLastUpdatedTimestamp(data: Summary) {
+    this.$lastUpdatedTime.innerText = this.getDateString(data);
+  }
+
+  private getDateString(data: Summary) {
+    return new Date(data.Date).toLocaleString();
   }
 }

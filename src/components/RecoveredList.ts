@@ -1,18 +1,23 @@
-import { $, calcTotalCountData, getUnixTimestamp } from '../lib/utils';
-import { createSpinnerElement } from '../lib/spinner';
+import { $, calcTotalCountData, sortByTimeStamp } from '../lib/utils';
 import { Country, Summary } from '../types';
 import { api } from '../lib/api';
 import { Component } from '../interfaces';
+import { RecoveredSpinner } from './RecoveredSpinner';
+import { RecoveredTotal } from './RecoveredTotal';
 
 export class RecoveredList implements Component {
-  private $recoveredList;
-  private $recoveredSpinner;
-  private $recoveredTotal;
+  private $recoveredList: HTMLElement;
+
+  private $spinner: RecoveredSpinner;
+
+  private $total: RecoveredTotal;
 
   constructor() {
     this.$recoveredList = $('.recovered-list');
-    this.$recoveredSpinner = createSpinnerElement('recovered-spinner');
-    this.$recoveredTotal = $('.recovered');
+
+    this.$spinner = new RecoveredSpinner(this.$recoveredList);
+
+    this.$total = new RecoveredTotal();
   }
 
   setup(data: Summary): void {
@@ -20,48 +25,7 @@ export class RecoveredList implements Component {
     this.setTotalRecoveredByWorld(String(TotalRecovered));
   }
 
-  setRecoveredList(data?: Country[]) {
-    if (!data) return;
-
-    const sorted = data.sort(
-      (a, b) => getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date),
-    );
-    sorted.forEach(value => {
-      const li = document.createElement('li');
-      li.setAttribute('class', 'list-item-b flex align-center');
-      const span = document.createElement('span');
-
-      span.textContent = String(value.Cases);
-      span.setAttribute('class', 'recovered');
-
-      const p = document.createElement('p');
-      p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
-
-      li.appendChild(span);
-      li.appendChild(p);
-
-      this.$recoveredList.appendChild(li);
-    });
-  }
-
-  startLoadingAnimation() {
-    this.$recoveredList.appendChild(this.$recoveredSpinner);
-  }
-
-  endLoadingAnimation() {
-    this.$recoveredList.removeChild(this.$recoveredSpinner);
-  }
-
-  clearRecoveredList() {
-    this.$recoveredList.innerHTML = '';
-  }
-
-  setTotalRecoveredByWorld(count: string) {
-    console.log(count);
-    this.$recoveredTotal.innerText = count;
-  }
-
-  async loadData(selectedId: string | undefined) {
+  public async loadData(selectedId: string | undefined) {
     this.clearRecoveredList();
 
     this.startLoadingAnimation();
@@ -77,7 +41,50 @@ export class RecoveredList implements Component {
     this.endLoadingAnimation();
   }
 
-  setTotalRecoveredByCountry(data?: Country[]) {
+  private setRecoveredList(data?: Country[]) {
+    if (!data) return;
+
+    const sorted = data.sort((a, b) => sortByTimeStamp(b.Date, a.Date));
+
+    sorted.forEach(value => {
+      this.$recoveredList.appendChild(this.createListItem(value));
+    });
+  }
+
+  private createListItem(value: Country) {
+    const $li = document.createElement('li');
+    $li.setAttribute('class', 'list-item-b flex align-center');
+    const span = document.createElement('span');
+
+    span.textContent = String(value.Cases);
+    span.setAttribute('class', 'recovered');
+
+    const p = document.createElement('p');
+    p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
+
+    $li.appendChild(span);
+    $li.appendChild(p);
+
+    return $li;
+  }
+
+  private startLoadingAnimation() {
+    this.$spinner.show();
+  }
+
+  private endLoadingAnimation() {
+    this.$spinner.hide();
+  }
+
+  private clearRecoveredList() {
+    this.$recoveredList.innerHTML = '';
+  }
+
+  private setTotalRecoveredByWorld(count: string) {
+    this.$total.setTotalHtml(count);
+  }
+
+  private setTotalRecoveredByCountry(data?: Country[]) {
     if (!data) return;
 
     this.setTotalRecoveredByWorld(data[0].Cases);

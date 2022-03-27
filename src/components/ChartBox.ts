@@ -1,20 +1,38 @@
-import { Country } from '../types';
+import { Country, Summary } from '../types';
 import { $ } from '../lib/utils';
 import { api } from '../lib/api';
+import { Component } from '../interfaces';
 
-export class ChartBox {
-  setChartData(data?: Country[]) {
-    if (!data) return;
-
-    const chartData: string[] = data.slice(-14).map(value => value.Cases);
-    const chartLabel = data
-      .slice(-14)
-      .map(value => new Date(value.Date).toLocaleDateString().slice(5, -1));
-
-    this.renderChart(chartData, chartLabel);
+export class ChartBox implements Component {
+  setup(data: Summary): void {
+    //throw new Error('Method not implemented.');
   }
 
-  renderChart(data: string[], labels: string[]) {
+  async loadData(selectedId: string | undefined) {
+    const confirmedResponse = await api.fetchCountryInfo(
+      selectedId,
+      'confirmed',
+    );
+
+    if (confirmedResponse) {
+      this.renderChart(
+        this.getData(confirmedResponse),
+        this.getLabel(confirmedResponse),
+      );
+    }
+  }
+
+  private getData(data: Country[]): string[] {
+    return data.slice(-14).map(value => value.Cases);
+  }
+
+  private getLabel(data: Country[]) {
+    return data
+      .slice(-14)
+      .map(value => new Date(value.Date).toLocaleDateString().slice(5, -1));
+  }
+
+  private renderChart(data: string[], labels: string[]) {
     const ctx = (<HTMLCanvasElement>$('#lineChart')).getContext('2d');
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -42,14 +60,5 @@ export class ChartBox {
       },
       options: {},
     });
-  }
-
-  async loadData(selectedId: string | undefined) {
-    const confirmedResponse = await api.fetchCountryInfo(
-      selectedId,
-      'confirmed',
-    );
-
-    this.setChartData(confirmedResponse);
   }
 }
