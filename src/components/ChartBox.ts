@@ -10,16 +10,10 @@ export class ChartBox implements Component {
   }
 
   async loadData(selectedId: string | undefined) {
-    const confirmedResponse = await api.fetchCountryInfo(
-      selectedId,
-      'confirmed',
-    );
+    const data = await api.fetchCountryInfo(selectedId, 'confirmed');
 
-    if (confirmedResponse) {
-      this.renderChart(
-        this.getData(confirmedResponse),
-        this.getLabel(confirmedResponse),
-      );
+    if (data) {
+      this.renderChart(this.getData(data), this.getLabel(data));
     }
   }
 

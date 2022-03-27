@@ -10,15 +10,15 @@ export class DeathTotal {
 
   loadData(data: Summary) {
     const count = calcTotalCountData(data, 'TotalDeaths');
-    this.setByWorld(String(count));
+    this.setHtml(String(count));
   }
 
-  setByWorld(count: string) {
+  setHtml(count: string) {
     this.$container.innerText = count;
   }
 
-  setTotalDeathsByCountry(data?: Country[]) {
+  setHtmlByFirstCountry(data?: Country[]) {
     if (!data) return;
-    this.setByWorld(data[0].Cases);
+    this.setHtml(data[0].Cases);
   }
 }

@@ -1,23 +1,25 @@
-import { $ } from '../lib/utils';
-import { Country } from '../types';
+import { $, calcTotalCountData } from '../lib/utils';
+import { Country, Summary } from '../types';
 
 export class RecoveredTotal {
-  private readonly $recoveredTotal: HTMLElement;
+  private readonly $container: HTMLElement;
 
   constructor() {
-    this.$recoveredTotal = $('.recovered');
+    this.$container = $('.recovered');
   }
 
-  public setTotalHtml(count: number | string) {
-    this.$recoveredTotal.innerText = String(count);
+  loadData(data: Summary) {
+    const TotalRecovered = calcTotalCountData(data, 'TotalRecovered');
+    this.setHtml(String(TotalRecovered));
   }
 
-  public setTotalRecoveredByWorld(count: string) {
-    this.setTotalHtml(count);
+  public setHtml(count: number | string) {
+    this.$container.innerText = String(count);
   }
 
-  public setTotalRecoveredByCountry(data?: Country[]) {
+  public setHtmlByFirstCountry(data?: Country[]) {
     if (!data) return;
-    this.setTotalRecoveredByWorld(data[0].Cases);
+
+    this.setHtml(data[0].Cases);
   }
 }

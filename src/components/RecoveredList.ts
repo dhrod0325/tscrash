@@ -9,17 +9,16 @@ export class RecoveredList {
     this.$container = $('.recovered-list');
   }
 
-  setRecoveredList(data?: Country[]) {
+  setItems(data?: Country[]) {
     if (!data) return;
 
     const sorted = data.sort((a, b) => sortByTimeStamp(b.Date, a.Date));
-
     sorted.forEach(value => {
       this.$container.appendChild(createRecoveredListItem(value));
     });
   }
 
-  clearRecoveredList() {
+  clear() {
     this.$container.innerHTML = '';
   }
 }

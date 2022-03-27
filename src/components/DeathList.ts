@@ -10,14 +10,10 @@ export class DeathList {
   }
 
   public async loadData(data?: Country[]) {
-    this.setDeathsList(data);
+    this.setItems(data);
   }
 
-  public clearDeathList() {
-    this.$container.innerHTML = '';
-  }
-
-  private setDeathsList(data?: Country[]) {
+  private setItems(data?: Country[]) {
     if (!data) return;
 
     const sorted = data.sort((a, b) => sortByTimeStamp(a.Date, b.Date));
@@ -25,5 +21,9 @@ export class DeathList {
     sorted.forEach(country => {
       this.$container.appendChild(createDeathTotalListItem(country));
     });
+  }
+
+  public clear() {
+    this.$container.innerHTML = '';
   }
 }
