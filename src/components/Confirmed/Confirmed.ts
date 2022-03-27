@@ -2,7 +2,7 @@ import { Component } from '../../interfaces';
 import { Summary } from '../../types';
 import { $, calcTotalConfirmed } from '../../lib/utils';
 
-export class ConfirmedTotal implements Component {
+export class Confirmed implements Component {
   private readonly CONTAINER_SELECTOR = '.confirmed-total';
 
   private readonly $container: HTMLElement;

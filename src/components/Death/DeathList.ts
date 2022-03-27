@@ -30,6 +30,8 @@ export class DeathList {
   }
 
   private addItem(country: Country): void {
-    this.$container.appendChild(createDeathTotalListItem(country));
+    const child = createDeathTotalListItem(country);
+
+    this.$container.appendChild(child);
   }
 }

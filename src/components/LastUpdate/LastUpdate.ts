@@ -2,7 +2,7 @@ import { Component } from '../../interfaces';
 import { Summary } from '../../types';
 import { $, getDateString } from '../../lib/utils';
 
-export class LastUpdateTime implements Component {
+export class LastUpdate implements Component {
   private readonly SELECTOR_ID = '.last-updated-time';
 
   private readonly $container: HTMLElement;

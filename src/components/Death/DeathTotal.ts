@@ -12,6 +12,7 @@ export class DeathTotal {
 
   public loadData(data: Summary) {
     const count = calcTotalDeaths(data);
+
     this.setHtml(String(count));
   }
 

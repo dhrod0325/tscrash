@@ -1,4 +1,4 @@
-import { Country, TotalCounterProp, Summary } from '../types';
+import { Country, Summary, TotalCounterProp } from '../types';
 
 export function $(selector: string): HTMLElement {
   return <HTMLElement>document.querySelector(selector);

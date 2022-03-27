@@ -8,16 +8,17 @@ import { $, getDateString } from '../../lib/utils';
 export class ChartBox implements Component {
   private readonly VIEW_DATE_COUNT = -14;
 
+  // @ts-ignore
+  private chart;
+
   setup(data: Summary): void {
     //throw new Error('Method not implemented.');
   }
 
-  async loadData(selectedId: string) {
+  public async loadData(selectedId: string) {
     const data = await api.getConfirmed(selectedId);
 
-    if (data) {
-      this.render(this.createData(data), this.createLabel(data));
-    }
+    if (data) this.render(this.createData(data), this.createLabel(data));
   }
 
   private filteredViewDateData(data: Country[]) {
@@ -35,6 +36,10 @@ export class ChartBox implements Component {
   }
 
   private render(data: string[], labels: string[]): void {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
     const ctx = (<HTMLCanvasElement>$('#lineChart')).getContext('2d');
 
     // @ts-ignore
@@ -43,7 +48,7 @@ export class ChartBox implements Component {
     Chart.defaults.global.defaultFontFamily = 'Exo 2';
 
     // @ts-ignore
-    new Chart(ctx, {
+    this.chart = new Chart(ctx, {
       type: 'line',
       data: {
         labels,
