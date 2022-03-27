@@ -5,23 +5,27 @@ import { createRecoveredListItem } from '../../lib/template';
 export class RecoveredList {
   private readonly CONTAINER_SELECTOR = '.recovered-list';
 
-  readonly $container: HTMLElement;
+  private readonly $container: HTMLElement;
 
   constructor() {
     this.$container = $(this.CONTAINER_SELECTOR);
   }
 
-  setItems(data?: Country[]): void {
+  public container() {
+    return this.$container;
+  }
+
+  public setItems(data?: Country[]): void {
     if (!data) return;
 
     sortedData(data).forEach(value => this.addItem(value));
   }
 
-  addItem(value: Country): void {
-    this.$container.appendChild(createRecoveredListItem(value));
+  public clear(): void {
+    this.$container.innerHTML = '';
   }
 
-  clear(): void {
-    this.$container.innerHTML = '';
+  public addItem(value: Country): void {
+    this.$container.appendChild(createRecoveredListItem(value));
   }
 }

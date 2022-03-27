@@ -5,12 +5,14 @@ import { createRankListItem } from '../../lib/template';
 import { $ } from '../../lib/utils';
 
 export class RankList implements Component {
+  private CONTAINER_SELECTOR = '.rank-list';
+
   private readonly ITEM_CLICK_EVENT_NAME = 'rankItemClicked';
 
   private readonly $container: HTMLElement;
 
   constructor(eventEmitter: EventEmitter) {
-    this.$container = $('.rank-list');
+    this.$container = $(this.CONTAINER_SELECTOR);
     this.$container.addEventListener('click', e => {
       eventEmitter.emit(this.ITEM_CLICK_EVENT_NAME, e);
     });

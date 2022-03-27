@@ -16,14 +16,14 @@ export class RecoveredTotalList implements Component {
     this.$list = new RecoveredList();
   }
 
-  setup(data: Summary): void {
+  public setup(data: Summary): void {
     this.$total.loadData(data);
   }
 
   public async loadData(selectedId: string) {
     this.$list.clear();
 
-    await useSpinner(this.$list.$container, this.SPINNER_ID, async () => {
+    await useSpinner(this.$list.container(), this.SPINNER_ID, async () => {
       const data = await api.getRecovered(selectedId);
 
       this.$list.setItems(data);

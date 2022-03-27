@@ -1,10 +1,8 @@
-import { Country, Summary, TotalCounterProp } from '../../types';
-import { $, calcTotalCountData } from '../../lib/utils';
+import { Country, Summary } from '../../types';
+import { $, calcTotalRecovered } from '../../lib/utils';
 
 export class RecoveredTotal {
   private readonly CONTAINER_SELECTOR = '.recovered';
-
-  private readonly PROP_KEY: TotalCounterProp = 'TotalRecovered';
 
   private readonly $container: HTMLElement;
 
@@ -12,14 +10,14 @@ export class RecoveredTotal {
     this.$container = $(this.CONTAINER_SELECTOR);
   }
 
-  loadData(data: Summary): void {
-    const TotalRecovered = calcTotalCountData(data, this.PROP_KEY);
+  public loadData(data: Summary): void {
+    const count = calcTotalRecovered(data);
 
-    this.setHtml(String(TotalRecovered));
+    this.setHtml(String(count));
   }
 
-  public setHtml(count: number | string): void {
-    this.$container.innerText = String(count);
+  public setHtml(count: string): void {
+    this.$container.innerText = count;
   }
 
   public setHtmlByFirstCountry(data?: Country[]): void {

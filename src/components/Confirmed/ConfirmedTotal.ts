@@ -1,11 +1,9 @@
 import { Component } from '../../interfaces';
-import { Summary, TotalCounterProp } from '../../types';
-import { $, calcTotalCountData } from '../../lib/utils';
+import { Summary } from '../../types';
+import { $, calcTotalConfirmed } from '../../lib/utils';
 
 export class ConfirmedTotal implements Component {
   private readonly CONTAINER_SELECTOR = '.confirmed-total';
-
-  private readonly PROP_KEY: TotalCounterProp = 'TotalConfirmed';
 
   private readonly $container: HTMLElement;
 
@@ -14,7 +12,7 @@ export class ConfirmedTotal implements Component {
   }
 
   public setup(data: Summary): void {
-    const count = calcTotalCountData(data, this.PROP_KEY);
+    const count = calcTotalConfirmed(data);
     this.setHtml(String(count));
   }
 

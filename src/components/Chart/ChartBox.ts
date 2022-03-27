@@ -6,6 +6,8 @@ import { api } from '../../lib/api';
 import { $, getDateString } from '../../lib/utils';
 
 export class ChartBox implements Component {
+  private readonly VIEW_DATE_COUNT = -14;
+
   setup(data: Summary): void {
     //throw new Error('Method not implemented.');
   }
@@ -18,12 +20,18 @@ export class ChartBox implements Component {
     }
   }
 
+  private filteredViewDateData(data: Country[]) {
+    return data.slice(this.VIEW_DATE_COUNT);
+  }
+
   private createData(data: Country[]): string[] {
-    return data.slice(-14).map(value => value.Cases);
+    return this.filteredViewDateData(data).map(value => value.Cases);
   }
 
   private createLabel(data: Country[]) {
-    return data.slice(-14).map(value => getDateString(value.Date).slice(5, -1));
+    return this.filteredViewDateData(data).map(value =>
+      getDateString(value.Date).slice(5, -1),
+    );
   }
 
   private render(data: string[], labels: string[]): void {

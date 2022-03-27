@@ -23,6 +23,18 @@ export function calcTotalCountData(
   return data.Countries.reduce((total, current) => total + current[prop], 0);
 }
 
+export function calcTotalConfirmed(data: Summary) {
+  return calcTotalCountData(data, 'TotalConfirmed');
+}
+
+export function calcTotalRecovered(data: Summary) {
+  return calcTotalCountData(data, 'TotalRecovered');
+}
+
+export function calcTotalDeaths(data: Summary) {
+  return calcTotalCountData(data, 'TotalDeaths');
+}
+
 export function findClickedId(event: Event): string | undefined {
   let selectedId!: string | undefined;
 
