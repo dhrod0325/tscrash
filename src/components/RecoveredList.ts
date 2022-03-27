@@ -4,13 +4,14 @@ import { api } from '../lib/api';
 import { Component } from '../interfaces';
 import { RecoveredSpinner } from './RecoveredSpinner';
 import { RecoveredTotal } from './RecoveredTotal';
+import { createRecoveredListItem } from '../lib/template';
 
 export class RecoveredList implements Component {
-  private $recoveredList: HTMLElement;
+  private readonly $recoveredList: HTMLElement;
 
-  private $spinner: RecoveredSpinner;
+  private readonly $spinner: RecoveredSpinner;
 
-  private $total: RecoveredTotal;
+  private readonly $total: RecoveredTotal;
 
   constructor() {
     this.$recoveredList = $('.recovered-list');
@@ -47,25 +48,8 @@ export class RecoveredList implements Component {
     const sorted = data.sort((a, b) => sortByTimeStamp(b.Date, a.Date));
 
     sorted.forEach(value => {
-      this.$recoveredList.appendChild(this.createListItem(value));
+      this.$recoveredList.appendChild(createRecoveredListItem(value));
     });
-  }
-
-  private createListItem(value: Country) {
-    const $li = document.createElement('li');
-    $li.setAttribute('class', 'list-item-b flex align-center');
-    const span = document.createElement('span');
-
-    span.textContent = String(value.Cases);
-    span.setAttribute('class', 'recovered');
-
-    const p = document.createElement('p');
-    p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
-
-    $li.appendChild(span);
-    $li.appendChild(p);
-
-    return $li;
   }
 
   private startLoadingAnimation() {

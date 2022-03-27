@@ -3,7 +3,7 @@ import { Component } from '../interfaces';
 import { Summary } from '../types';
 
 export class ConfirmedTotal implements Component {
-  private $confirmedTotal;
+  private readonly $confirmedTotal: HTMLElement;
 
   constructor() {
     this.$confirmedTotal = $('.confirmed-total');

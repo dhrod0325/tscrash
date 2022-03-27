@@ -3,7 +3,7 @@ import { Summary } from '../types';
 import { Component } from '../interfaces';
 
 export class LastUpdateTime implements Component {
-  private $lastUpdatedTime;
+  private readonly $lastUpdatedTime: HTMLElement;
 
   constructor() {
     this.$lastUpdatedTime = $('.last-updated-time');

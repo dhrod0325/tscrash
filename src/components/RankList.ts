@@ -1,10 +1,11 @@
 import { $ } from '../lib/utils';
-import { Country, Summary } from '../types';
+import { Summary } from '../types';
 import { Component } from '../interfaces';
 import { EventEmitter } from '../lib/EventEmitter';
+import { createRankListItem } from '../lib/template';
 
 export class RankList implements Component {
-  private $rankList;
+  private readonly $rankList: HTMLElement;
 
   constructor(eventEmitter: EventEmitter) {
     this.$rankList = $('.rank-list');
@@ -23,26 +24,7 @@ export class RankList implements Component {
     );
 
     sorted.forEach(value => {
-      this.$rankList.appendChild(this.createListItem(value));
+      this.$rankList.appendChild(createRankListItem(value));
     });
-  }
-
-  private createListItem(value: Country) {
-    const li = document.createElement('li');
-    li.setAttribute('class', 'list-item flex align-center');
-    li.setAttribute('id', value.Slug);
-
-    const span = document.createElement('span');
-    span.textContent = String(value.TotalConfirmed);
-    span.setAttribute('class', 'cases');
-
-    const p = document.createElement('p');
-    p.setAttribute('class', 'country');
-    p.textContent = value.Country;
-
-    li.appendChild(span);
-    li.appendChild(p);
-
-    return li;
   }
 }

@@ -1,7 +1,7 @@
 import { $ } from '../lib/utils';
 
 export class RecoveredTotal {
-  private $recoveredTotal: HTMLElement;
+  private readonly $recoveredTotal: HTMLElement;
 
   constructor() {
     this.$recoveredTotal = $('.recovered');

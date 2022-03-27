@@ -3,15 +3,17 @@ import {
   calcTotalCountData,
   createSpinnerElement,
   getUnixTimestamp,
+  sortByTimeStamp,
 } from '../lib/utils';
 import { Country, Summary } from '../types';
 import { api } from '../lib/api';
 import { Component } from '../interfaces';
+import { createDeathTotalListItem } from '../lib/template';
 
 export class DeathTotalList implements Component {
-  $deathsTotal;
-  $deathsList;
-  $deathSpinner;
+  private readonly $deathsTotal: HTMLElement;
+  private readonly $deathsList: HTMLElement;
+  private readonly $deathSpinner: HTMLElement;
 
   constructor() {
     this.$deathsTotal = $('.deaths');
@@ -59,31 +61,16 @@ export class DeathTotalList implements Component {
   private setDeathsList(data?: Country[]) {
     if (!data) return;
 
-    const sorted = data.sort(
-      (a, b) => getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date),
-    );
+    const sorted = data.sort((a, b) => sortByTimeStamp(a.Date, b.Date));
 
     sorted.forEach(country => {
-      this.$deathsList.appendChild(this.createListItem(country));
+      this.$deathsList.appendChild(createDeathTotalListItem(country));
     });
-  }
-
-  private createListItem(value: Country) {
-    const li = document.createElement('li');
-    li.setAttribute('class', 'list-item-b flex align-center');
-    const span = document.createElement('span');
-    span.textContent = value.Cases;
-    span.setAttribute('class', 'deaths');
-    const p = document.createElement('p');
-    p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
-    li.appendChild(span);
-    li.appendChild(p);
-
-    return li;
   }
 
   private setTotalDeathsByCountry(data?: Country[]) {
     if (!data) return;
+
     this.setTotalDeathsByWorld(data[0].Cases);
   }
 }
