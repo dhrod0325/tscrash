@@ -1,7 +1,8 @@
 import './assets/css/main.css';
-import { api } from './lib/api';
+
+import { api } from './lib/Api';
 import { Component } from './interfaces';
-import { findClickedId } from './lib/utils';
+import { createSummaryInfo, findClickedId } from './lib/utils';
 import { EventEmitter } from './lib/EventEmitter';
 import { Confirmed } from './components/Confirmed/Confirmed';
 import { RecoveredTotalList } from './components/Recovered/RecoveredTotalList';
@@ -40,7 +41,9 @@ function startApp() {
 async function setup() {
   const data = await api.getCovidSummary();
 
-  components.forEach(component => component.setup(data));
+  const summaryInfo = createSummaryInfo(data);
+
+  components.forEach(component => component.setup(summaryInfo));
 }
 
 // events

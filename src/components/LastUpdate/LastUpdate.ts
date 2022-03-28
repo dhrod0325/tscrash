@@ -1,6 +1,6 @@
-import { Component } from '../../interfaces';
-import { Summary } from '../../types';
-import { $, getDateString } from '../../lib/utils';
+import { Component } from '@/interfaces';
+import { Summary } from '@/types';
+import { $, getDateString } from '@/lib/utils';
 
 export class LastUpdate implements Component {
   private readonly SELECTOR_ID = '.last-updated-time';

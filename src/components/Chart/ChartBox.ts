@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-import { Component } from '../../interfaces';
-import { Country, Summary } from '../../types';
-import { api } from '../../lib/api';
-import { $, getDateString } from '../../lib/utils';
+import { Component } from '@/interfaces';
+import { Country, SummaryInfo } from '@/types';
+import { $, getDateString } from '@/lib/utils';
+import { api } from '@/lib/Api';
 
 export class ChartBox implements Component {
   private readonly VIEW_DATE_COUNT = -14;
@@ -11,7 +11,7 @@ export class ChartBox implements Component {
   // @ts-ignore
   private chart;
 
-  setup(data: Summary): void {
+  setup(data: SummaryInfo): void {
     //throw new Error('Method not implemented.');
   }
 

@@ -1,6 +1,6 @@
-import { Country } from '../../types';
-import { $, sortedData } from '../../lib/utils';
-import { createRecoveredListItem } from '../../lib/template';
+import { Country } from '@/types';
+import { $, sortedData } from '@/lib/utils';
+import { createRecoveredListItem } from '@/lib/template';
 
 export class RecoveredList {
   private readonly CONTAINER_SELECTOR = '.recovered-list';
