@@ -3,7 +3,7 @@ import { BaseComponent } from '@/lib/BaseComponent';
 
 export class Confirmed extends BaseComponent {
   public setup(data: SummaryInfo): void {
-    this.setHtml(String(data.TotalConfirmed));
+    this.setHtml(`${data.TotalConfirmed}`);
   }
 
   private setHtml(count: string): void {

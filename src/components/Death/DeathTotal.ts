@@ -11,7 +11,7 @@ export class DeathTotal {
   }
 
   public loadData(data: SummaryInfo) {
-    this.setHtml(String(data.TotalDeaths));
+    this.setHtml(`${data.TotalDeaths}`);
   }
 
   public setHtml(count: string) {

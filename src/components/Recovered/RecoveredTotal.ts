@@ -1,15 +1,9 @@
 import { Country, SummaryInfo } from 'covid';
-import { $ } from '@/lib/utils';
+import { BaseComponent } from '@/lib/BaseComponent';
 
-export class RecoveredTotal {
-  private readonly $container: HTMLElement;
-
-  constructor(container: string) {
-    this.$container = $(container);
-  }
-
+export class RecoveredTotal extends BaseComponent {
   public loadData(data: SummaryInfo): void {
-    this.setHtml(String(data.TotalRecovered));
+    this.setHtml(`${data.TotalRecovered}`);
   }
 
   public setHtml(count: string): void {
