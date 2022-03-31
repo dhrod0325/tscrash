@@ -19,7 +19,9 @@ export class App {
   private async setUp() {
     const data = await api.getCovidSummary();
     const summaryInfo = createSummaryInfo(data);
-    this.components.forEach(component => component.setup(summaryInfo));
+    this.components.forEach(
+      component => component.setup && component.setup(summaryInfo),
+    );
   }
 
   private bindEvents() {

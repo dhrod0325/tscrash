@@ -1,14 +1,12 @@
-import { Country } from '@/types';
+import { Country } from 'covid';
 import { $, sortedData } from '@/lib/utils';
 import { createRecoveredListItem } from '@/lib/template';
 
 export class RecoveredList {
-  private readonly CONTAINER_SELECTOR = '.recovered-list';
-
   private readonly $container: HTMLElement;
 
-  constructor() {
-    this.$container = $(this.CONTAINER_SELECTOR);
+  constructor(container: string) {
+    this.$container = $(container);
   }
 
   public container() {

@@ -1,4 +1,6 @@
-export class Spinner {
+import { Spinner } from 'covid';
+
+export class DefaultSpinner implements Spinner {
   private readonly $container: HTMLElement;
 
   private readonly $spinner: HTMLElement;
@@ -6,14 +8,6 @@ export class Spinner {
   constructor($container: HTMLElement, spinnerId: string) {
     this.$container = $container;
     this.$spinner = this.create(spinnerId);
-  }
-
-  public show(): void {
-    this.$container.appendChild(this.$spinner);
-  }
-
-  public hide(): void {
-    this.$container.removeChild(this.$spinner);
   }
 
   public async spin(callback: () => void) {
@@ -24,7 +18,7 @@ export class Spinner {
     await this.hide();
   }
 
-  create(id: string): HTMLElement {
+  private create(id: string): HTMLElement {
     function createWrapper() {
       const wrapperDiv = document.createElement('div');
       wrapperDiv.setAttribute('id', id);
@@ -51,13 +45,12 @@ export class Spinner {
 
     return wrapperDiv;
   }
-}
 
-export const useSpinner = (
-  $container: HTMLElement,
-  spinnerId: string,
-  callback: () => void,
-) => {
-  const spinner = new Spinner($container, spinnerId);
-  return spinner.spin(callback);
-};
+  private show(): void {
+    this.$container.appendChild(this.$spinner);
+  }
+
+  private hide(): void {
+    this.$container.removeChild(this.$spinner);
+  }
+}

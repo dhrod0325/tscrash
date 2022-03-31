@@ -11,13 +11,12 @@ import { LastUpdate } from '@/components/LastUpdate/LastUpdate';
 import { App } from '@/lib/App';
 
 const components: Component[] = [
-  new RankList(),
-  new RecoveredTotalList(),
+  new RankList('.rank-list'),
+  new Confirmed('.confirmed-total'),
+  new LastUpdate('.last-updated-time'),
   new RecoveredTotalList(),
   new DeathTotalList(),
   new ChartBox(),
-  new Confirmed(),
-  new LastUpdate(),
 ];
 
 const app = new App(components);

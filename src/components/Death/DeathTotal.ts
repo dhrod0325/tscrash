@@ -1,4 +1,4 @@
-import { Country, SummaryInfo } from '@/types';
+import { Country, SummaryInfo } from 'covid';
 import { $ } from '@/lib/utils';
 
 export class DeathTotal {

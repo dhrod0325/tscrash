@@ -1,13 +1,11 @@
-import { Country, SummaryInfo } from '@/types';
+import { Country, SummaryInfo } from 'covid';
 import { $ } from '@/lib/utils';
 
 export class RecoveredTotal {
-  private readonly CONTAINER_SELECTOR = '.recovered';
-
   private readonly $container: HTMLElement;
 
-  constructor() {
-    this.$container = $(this.CONTAINER_SELECTOR);
+  constructor(container: string) {
+    this.$container = $(container);
   }
 
   public loadData(data: SummaryInfo): void {

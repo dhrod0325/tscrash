@@ -1,7 +1,8 @@
-import { ApiCountryInfoType, Country, Summary } from '../types';
+import { ApiCountryInfoType, Country, Summary } from 'covid';
 import { HttpClient } from './HttpClient';
 
 const API_BASE_URL = 'https://api.covid19api.com';
+
 const API_SUMMARY_URL = `${API_BASE_URL}/summary`;
 const API_COUNTRY_URL = `${API_BASE_URL}/country`;
 
