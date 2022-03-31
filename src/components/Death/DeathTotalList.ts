@@ -11,8 +11,8 @@ export class DeathTotalList implements Component {
   private readonly $list: DeathList;
 
   constructor() {
-    this.$total = new DeathTotal();
-    this.$list = new DeathList();
+    this.$total = new DeathTotal('.deaths');
+    this.$list = new DeathList('.deaths-list');
   }
 
   public setup(data: SummaryInfo): void {
@@ -22,7 +22,7 @@ export class DeathTotalList implements Component {
   public async loadData(selectedId: string) {
     this.$list.clear();
 
-    const spinner = new DefaultSpinner(this.$list.container(), this.SPINNER_ID);
+    const spinner = new DefaultSpinner(this.$list.$container, this.SPINNER_ID);
     await spinner.spin(async () => {
       const data = await api.getDeaths(selectedId);
       await this.$list.loadData(data);

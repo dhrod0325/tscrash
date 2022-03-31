@@ -1,15 +1,7 @@
 import { Country, SummaryInfo } from 'covid';
-import { $ } from '@/lib/utils';
+import { BaseComponent } from '@/lib/BaseComponent';
 
-export class DeathTotal {
-  private readonly CONTAINER_SELECTOR = '.deaths';
-
-  private readonly $container: HTMLElement;
-
-  constructor() {
-    this.$container = $(this.CONTAINER_SELECTOR);
-  }
-
+export class DeathTotal extends BaseComponent {
   public loadData(data: SummaryInfo) {
     this.setHtml(`${data.TotalDeaths}`);
   }

@@ -1,18 +1,12 @@
 import { Country } from 'covid';
 
-import { $, sortedData } from '@/lib/utils';
+import { sortedData } from '@/lib/utils';
 import { DeathListItem } from '@/components/Death/DeathListItem';
+import { BaseComponent } from '@/lib/BaseComponent';
 
-export class DeathList extends Array<HTMLElement> {
-  private readonly CONTAINER_SELECTOR = '.deaths-list';
-
-  public container() {
-    return $(this.CONTAINER_SELECTOR);
-  }
-
+export class DeathList extends BaseComponent {
   public clear() {
-    this.container().innerHTML = '';
-    this.splice(0, this.length);
+    this.$container.innerHTML = '';
   }
 
   public async loadData(data?: Country[]) {
@@ -22,8 +16,7 @@ export class DeathList extends Array<HTMLElement> {
       const deathListItem = new DeathListItem(country);
       const elem = deathListItem.getElement();
 
-      this.container().appendChild(elem);
-      this.push(elem);
+      this.$container.appendChild(elem);
     });
   }
 }
