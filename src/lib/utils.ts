@@ -35,9 +35,12 @@ export function getIdByEventTarget(event: Event): string | undefined {
   return undefined;
 }
 
-export function sortedData(data: Country[]): Country[] {
-  const result = data.sort((a, b) => timeDiff(a.Date, b.Date));
-  return [...result];
+export function sortedCountriesByTotalConfirmed(data: Country[]): Country[] {
+  return [...data.sort((a, b) => b.TotalConfirmed - a.TotalConfirmed)];
+}
+
+export function sortedCountriesByDate(data: Country[]): Country[] {
+  return [...data.sort((a, b) => timeDiff(a.Date, b.Date))];
 }
 
 export function createSummaryInfo(summary: Summary): SummaryInfo {

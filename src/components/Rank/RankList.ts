@@ -1,6 +1,7 @@
 import { createRankListItem } from '@/lib/template';
 import { Country, Summary } from 'covid';
 import { BaseComponent } from '@/lib/BaseComponent';
+import { sortedCountriesByTotalConfirmed } from '@/lib/utils';
 
 export class RankList extends BaseComponent {
   public static readonly CLICK_EVENT = 'RankList.CLICK_EVENT';
@@ -16,13 +17,9 @@ export class RankList extends BaseComponent {
   }
 
   private addItemsByTotalConfirmed(data: Summary): void {
-    this.sortedCountriesByTotalConfirmed(data).forEach(value =>
+    sortedCountriesByTotalConfirmed(data.Countries).forEach(value =>
       this.addItem(value),
     );
-  }
-
-  private sortedCountriesByTotalConfirmed(data: Summary): Country[] {
-    return data.Countries.sort((a, b) => b.TotalConfirmed - a.TotalConfirmed);
   }
 
   private addItem(value: Country): void {
