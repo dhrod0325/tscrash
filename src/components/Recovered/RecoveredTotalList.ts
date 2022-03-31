@@ -23,7 +23,7 @@ export class RecoveredTotalList implements Component {
   public async loadData(selectedId: string) {
     this.$list.clear();
 
-    const spinner = new DefaultSpinner(this.$list.container(), this.SPINNER_ID);
+    const spinner = new DefaultSpinner(this.$list.$container, this.SPINNER_ID);
     await spinner.spin(async () => {
       const data = await api.getRecovered(selectedId);
 

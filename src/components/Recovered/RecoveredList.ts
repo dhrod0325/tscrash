@@ -1,18 +1,9 @@
 import { Country } from 'covid';
-import { $, sortedData } from '@/lib/utils';
+import { sortedData } from '@/lib/utils';
 import { createRecoveredListItem } from '@/lib/template';
+import { BaseComponent } from '@/lib/BaseComponent';
 
-export class RecoveredList {
-  private readonly $container: HTMLElement;
-
-  constructor(container: string) {
-    this.$container = $(container);
-  }
-
-  public container() {
-    return this.$container;
-  }
-
+export class RecoveredList extends BaseComponent {
   public setItems(data?: Country[]): void {
     if (!data) return;
 

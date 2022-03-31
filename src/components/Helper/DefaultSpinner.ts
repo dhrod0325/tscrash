@@ -11,9 +11,9 @@ export class DefaultSpinner implements Spinner {
   }
 
   public async spin(callback: () => void) {
-    await this.show();
+    this.show();
 
-    callback();
+    await callback();
 
     this.hide();
   }

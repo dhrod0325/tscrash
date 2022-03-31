@@ -12,14 +12,16 @@ export class RankList extends BaseComponent {
       );
     });
 
-    this.setByTotalConfirmed(data);
+    this.addItemsByTotalConfirmed(data);
   }
 
-  private setByTotalConfirmed(data: Summary): void {
-    this.sortedData(data).forEach(value => this.addItem(value));
+  private addItemsByTotalConfirmed(data: Summary): void {
+    this.sortedCountriesByTotalConfirmed(data).forEach(value =>
+      this.addItem(value),
+    );
   }
 
-  private sortedData(data: Summary): Country[] {
+  private sortedCountriesByTotalConfirmed(data: Summary): Country[] {
     return data.Countries.sort((a, b) => b.TotalConfirmed - a.TotalConfirmed);
   }
 
