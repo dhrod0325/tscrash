@@ -1,10 +1,12 @@
+import { SummaryWrapper } from '@/@model/SummaryWrapper';
+
 declare module 'covid' {
   export interface SetupAble {
-    setup?(data: SummaryInfo): void;
+    setup?(data: SummaryWrapper): void;
   }
 
   export interface LoadDataAble {
-    isLoading?: boolean;
+    isLoading?(): boolean;
     loadData?(selectedId: string | undefined): void;
   }
 
@@ -20,10 +22,10 @@ declare module 'covid' {
   };
 
   export interface Client {
-    get({ url }: ClientInit): any;
-    post({ url, data }: ClientInit): any;
-    delete({ url, data }: ClientInit): any;
-    put({ url, data }: ClientInit): any;
+    get({ url }: ClientInit): unknown;
+    post({ url, data }: ClientInit): unknown;
+    delete({ url, data }: ClientInit): unknown;
+    put({ url, data }: ClientInit): unknown;
   }
 
   export interface Container {

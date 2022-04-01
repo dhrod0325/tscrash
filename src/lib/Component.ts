@@ -9,8 +9,8 @@ export class BaseComponent implements Component {
   }
 }
 
-export abstract class LoadingComponent implements Component {
-  public isLoading = false;
+export abstract class AsyncComponent implements Component {
+  private loading = false;
 
   public loadAsyncPrepare() {
     console.log('prepare async');
@@ -20,12 +20,16 @@ export abstract class LoadingComponent implements Component {
 
   //override
   public async loadData(selectedId: string | undefined) {
-    this.isLoading = true;
+    this.loading = true;
 
     this.loadAsyncPrepare && this.loadAsyncPrepare();
 
     await this.loadAsyncData(selectedId);
 
-    this.isLoading = false;
+    this.loading = false;
+  }
+
+  public isLoading() {
+    return this.loading;
   }
 }

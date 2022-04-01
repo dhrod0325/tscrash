@@ -1,11 +1,11 @@
 import { DeathList } from './DeathList';
 import { DeathTotal } from './DeathTotal';
-import { SummaryInfo } from 'covid';
 import { api } from '@/lib/Api';
 import { DefaultSpinner } from '../Helper/DefaultSpinner';
-import { LoadingComponent } from '@/lib/Component';
+import { AsyncComponent } from '@/lib/Component';
+import { SummaryWrapper } from '@/@model/SummaryWrapper';
 
-export class DeathTotalList extends LoadingComponent {
+export class DeathTotalList extends AsyncComponent {
   private readonly SPINNER_ID = 'deaths-spinner';
 
   private readonly $total: DeathTotal;
@@ -18,7 +18,7 @@ export class DeathTotalList extends LoadingComponent {
     this.$list = new DeathList('.deaths-list');
   }
 
-  public setup(data: SummaryInfo): void {
+  public setup(data: SummaryWrapper): void {
     this.$total.loadData(data);
   }
 
