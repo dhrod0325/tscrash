@@ -1,65 +1,51 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import { Country } from 'covid';
-import { $, getDateString } from '@/lib/utils';
+import { $ } from '@/lib/utils';
 import { api } from '@/lib/Api';
 import { AsyncComponent } from '@/lib/Component';
+import { Chart } from 'chart.js';
+import { createChartOption } from '@/components/Chart/ChartOption';
+
+Chart.defaults.global.defaultFontColor = '#f5eaea';
+Chart.defaults.global.defaultFontFamily = 'Exo 2';
 
 export class ChartBox extends AsyncComponent {
   private readonly VIEW_DATE_COUNT = -14;
 
-  // @ts-ignore
-  private chart;
+  private $container = $('#lineChart') as HTMLCanvasElement;
 
-  public async loadAsyncData(selectedId: string) {
-    const data = await api().getConfirmed(selectedId);
+  private chart?: Chart;
+  private countries: Country[] = [];
 
-    if (data) {
-      this.render(this.createData(data), this.createLabel(data));
-    }
+  prepareAsync() {
+    //
   }
 
-  private viewDataList(data: Country[]) {
-    return data.slice(this.VIEW_DATE_COUNT);
+  public async loadDataAsync(selectedId: string) {
+    this.destroy();
+
+    await this.initCountries(selectedId);
+
+    this.create();
   }
 
-  private createData(data: Country[]): string[] {
-    const list = this.viewDataList(data);
-
-    return list.map(value => value.Cases);
+  private async initCountries(selectedId: string) {
+    const countries = await api().getConfirmed(selectedId);
+    this.countries = [...countries].slice(this.VIEW_DATE_COUNT);
   }
 
-  private createLabel(data: Country[]): string[] {
-    const list = this.viewDataList(data);
-    return list.map(value => getDateString(value.Date).slice(5, -1));
+  private destroy() {
+    this.chart && this.chart.destroy();
   }
 
-  private render(data: string[], labels: string[]): void {
-    if (this.chart) {
-      this.chart.destroy();
-    }
+  private create() {
+    const ctx = this.$container.getContext('2d');
 
-    const ctx = ($('#lineChart') as HTMLCanvasElement).getContext('2d');
+    if (!ctx) throw new Error('chart create fail');
 
-    // @ts-ignore
-    Chart.defaults.global.defaultFontColor = '#f5eaea';
-    // @ts-ignore
-    Chart.defaults.global.defaultFontFamily = 'Exo 2';
+    const option = createChartOption(this.countries);
 
-    // @ts-ignore
-    this.chart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels,
-        datasets: [
-          {
-            label: 'Confirmed for the last two weeks',
-            backgroundColor: '#feb72b',
-            borderColor: '#feb72b',
-            data,
-          },
-        ],
-      },
-    });
+    this.chart = new Chart(ctx, option);
   }
 }

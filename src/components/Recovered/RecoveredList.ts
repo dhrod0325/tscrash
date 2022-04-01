@@ -13,20 +13,18 @@ const template = (value: Country): Element => {
 };
 
 export class RecoveredList extends BaseComponent {
-  public setItems(data?: Country[]): void {
-    if (!data) return;
+  public setItems(countries?: Country[]): void {
+    if (!countries) return;
 
-    const countries = new CountriesWrapper(data);
-    countries.getSortedByDate().forEach(value => this.addItem(value));
+    const countriesWrapper = new CountriesWrapper(countries);
+    countriesWrapper.getSortedByDate().forEach(value => this.addItem(value));
   }
 
   public clear(): void {
-    this.$container.innerHTML = '';
+    this.getContainer().innerHTML = '';
   }
 
-  public addItem(value: Country): void {
-    const child = template(value);
-
-    this.$container.appendChild(child);
+  public addItem(country: Country): void {
+    this.getContainer().appendChild(template(country));
   }
 }

@@ -2,31 +2,42 @@ import { Component } from 'covid';
 import { $ } from '@/lib/utils';
 
 export class BaseComponent implements Component {
-  readonly $container: HTMLElement;
+  private readonly $container: HTMLElement;
 
   constructor(selector: string) {
     this.$container = $(selector) as HTMLElement;
+  }
+
+  public getContainer(): HTMLElement {
+    return this.$container;
   }
 }
 
 export abstract class AsyncComponent implements Component {
   private loading = false;
 
-  public loadAsyncPrepare() {
-    console.log('prepare async');
-  }
+  public abstract prepareAsync?(): void;
 
-  public abstract loadAsyncData(selectedId: string | undefined): void;
+  public abstract loadDataAsync(selectedId: string | undefined): void;
 
   //override
   public async loadData(selectedId: string | undefined) {
+    if (!selectedId) return;
+
     this.loading = true;
 
-    this.loadAsyncPrepare && this.loadAsyncPrepare();
+    try {
+      this.prepareAsync && this.prepareAsync();
+      await this.loadDataAsync(selectedId);
+    } catch (e) {
+      console.log('Api 요청실패 1 초후 다시 로드');
 
-    await this.loadAsyncData(selectedId);
-
-    this.loading = false;
+      setTimeout(async () => {
+        await this.loadData(selectedId);
+      }, 1000);
+    } finally {
+      this.loading = false;
+    }
   }
 
   public isLoading() {
