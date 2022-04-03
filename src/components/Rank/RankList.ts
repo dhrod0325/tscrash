@@ -1,8 +1,7 @@
 import { Country } from 'covid';
 import { BaseComponent } from '@/lib/Component';
 import { createElement } from '@/lib/utils';
-import { CountriesWrapper } from '@/@model/CountriesWrapper';
-import { SummaryWrapper } from '@/@model/SummaryWrapper';
+import { SummaryWrapper } from '@/model/SummaryWrapper';
 
 export const template = (value: Country): Element => {
   return createElement(`
@@ -26,9 +25,11 @@ export class RankList extends BaseComponent {
     this.addItemsByTotalConfirmed(summary);
   }
 
-  private addItemsByTotalConfirmed(data: SummaryWrapper): void {
-    const countries = new CountriesWrapper(data.summary.Countries);
-    countries.getSortedByTotalConfirmed().forEach(value => this.addItem(value));
+  private addItemsByTotalConfirmed(summary: SummaryWrapper): void {
+    summary
+      .getCountries()
+      .getSortedByTotalConfirmed()
+      .forEach(value => this.addItem(value));
   }
 
   private addItem(value: Country): void {

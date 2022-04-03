@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
 import { Country } from 'covid';
 import { $ } from '@/lib/utils';
 import { api } from '@/lib/Api';
@@ -31,7 +29,7 @@ export class ChartBox extends AsyncComponent {
   }
 
   private async initCountries(selectedId: string) {
-    const countries = await api().getConfirmed(selectedId);
+    const countries = await api().getConfirmedCountries(selectedId);
     this.countries = [...countries].slice(this.VIEW_DATE_COUNT);
   }
 

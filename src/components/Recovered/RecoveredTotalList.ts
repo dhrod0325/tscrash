@@ -3,27 +3,20 @@ import { RecoveredTotal } from './RecoveredTotal';
 import { api } from '@/lib/Api';
 import { DefaultSpinner } from '@/components/Helper/DefaultSpinner';
 import { AsyncComponent } from '@/lib/Component';
-import { SummaryWrapper } from '@/@model/SummaryWrapper';
+import { SummaryWrapper } from '@/model/SummaryWrapper';
 
 export class RecoveredTotalList extends AsyncComponent {
   private readonly SPINNER_ID = 'recovered-spinner';
 
-  private readonly $total: RecoveredTotal;
-  private readonly $list: RecoveredList;
+  private readonly $total: RecoveredTotal = new RecoveredTotal('.recovered');
+  private readonly $list: RecoveredList = new RecoveredList('.recovered-list');
 
-  constructor() {
-    super();
-
-    this.$total = new RecoveredTotal('.recovered');
-    this.$list = new RecoveredList('.recovered-list');
-  }
-
-  public setup(data: SummaryWrapper): void {
-    this.$total.loadData(data);
+  public setup(summary: SummaryWrapper): void {
+    this.$total.loadData(summary);
   }
 
   public prepareAsync(): void {
-    this.$list.clear();
+    this.$list.clearHtml();
   }
 
   public async loadDataAsync(selectedId: string) {
@@ -33,10 +26,10 @@ export class RecoveredTotalList extends AsyncComponent {
     );
 
     await spinner.spin(async () => {
-      const data = await api().getRecovered(selectedId);
+      const countries = await api().getRecoveredCountries(selectedId);
 
-      this.$list.setItems(data);
-      this.$total.setHtmlByFirstCountry(data);
+      this.$list.setItems(countries);
+      this.$total.setHtmlByFirstCountry(countries);
     });
   }
 }
