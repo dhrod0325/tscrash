@@ -3,7 +3,7 @@ import { getDateString } from '@/lib/utils';
 import { CountriesWrapper } from '@/model/CountriesWrapper';
 
 export class SummaryWrapper {
-  public summary: Summary;
+  private summary: Summary;
 
   constructor(summary: Summary) {
     this.summary = summary;
