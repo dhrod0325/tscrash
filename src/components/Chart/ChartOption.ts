@@ -17,7 +17,7 @@ class ChartOption {
     return this.countries.map(value => getDateString(value.Date).slice(5, -1));
   }
 
-  public create(): Chart.ChartConfiguration {
+  public createChartOption(): Chart.ChartConfiguration {
     const data = this.getData();
     const labels = this.getLabels();
 
@@ -39,4 +39,4 @@ class ChartOption {
 }
 
 export const createChartOption = (countries: Country[]) =>
-  new ChartOption(countries).create();
+  new ChartOption(countries).createChartOption();
